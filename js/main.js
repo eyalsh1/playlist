@@ -14,7 +14,7 @@ $(".outer-circle").hover(function() {
     //$(".outer-circle .btn").removeClass('hidden');
     $(".outer-circle .btn").toggleClass('hidden');
     //$( this ).toggleClass('hidden');
-    console.log(this);
+    //console.log(this);
 });
 
 //$('#arc').arctext({radius: 120});
