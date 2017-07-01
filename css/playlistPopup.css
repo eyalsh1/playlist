@@ -1,4 +1,4 @@
-#popup {
+#popup_background {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     display: flex;
@@ -9,7 +9,7 @@
 #popup_container {
     position: relative;
     max-width: 80%;
-    padding:1rem;
+    padding: 1rem;
     background-color: white;
 }
 

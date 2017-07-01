@@ -1,7 +1,23 @@
 $('#add-new-playlist-button').on('click',function() {
-    var playlistPopup = new PlaylistPopup('Add');
+    var playlistPopup = new PlaylistPopup();
     playlistPopup.build();
 });
+
+/*$( ".outer-circle" ).hover(function() {
+    //console.log('hover');
+    $( this ).fadeOut( 100 );
+    $( this ).fadeIn( 500 );
+});*/
+
+$(".outer-circle").hover(function() {
+    //console.log('hover');
+    //$(".outer-circle .btn").removeClass('hidden');
+    $(".outer-circle .btn").toggleClass('hidden');
+    //$( this ).toggleClass('hidden');
+    console.log(this);
+});
+
+//$('#arc').arctext({radius: 120});
 
 // $.ajax({
 //     url: "api/playlist.php?type=playlist&id=1",
