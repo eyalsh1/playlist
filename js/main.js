@@ -3,19 +3,53 @@ $('#add-new-playlist-button').on('click',function() {
     playlistPopup.build();
 });
 
+$.get("api/playlist.php?type=playlist", function(response) {
+    for (i=0; i < response.data.length; i++) {
+        addAlbom(response.data[i]);
+    }
+});
+
+function addAlbom(albom) {
+    console.log(albom.id);
+    console.log(albom.name);
+    console.log(albom.image);
+
+    var albomName = $('<div>', {
+        class: "albom-name",
+    }).appendTo("body");
+
+    $('<strong>', {
+        text: albom.name,
+    }).appendTo(albomName);
+
+    var outerCircle = $('<div>', {
+        class: "outer-circle",
+        'album-id': albom.id
+    });
+    outerCircle.css('background-image', 'url(' + albom.image + ')');
+    outerCircle.appendTo(albomName);
+
+    $('<button>', {
+        type: "button",
+        class: "btn btn-warning btn-circle glyphicon glyphicon-remove",
+    }).appendTo(outerCircle);
+
+    $('<button>', {
+        type: "button",
+        class: "btn btn-info btn-circle glyphicon glyphicon-pencil",
+    }).appendTo(outerCircle);
+
+    $('<button>', {
+        type: "button",
+        class: "btn btn-success btn-circle-xl glyphicon glyphicon-play",
+    }).appendTo(outerCircle);
+}
+
 /*$( ".outer-circle" ).hover(function() {
     //console.log('hover');
     $( this ).fadeOut( 100 );
-    $( this ).fadeIn( 500 );
+    $( this ).fadeIn( 100 );
 });*/
-
-$(".outer-circle").hover(function() {
-    //console.log('hover');
-    //$(".outer-circle .btn").removeClass('hidden');
-    $(".outer-circle .btn").toggleClass('hidden');
-    //$( this ).toggleClass('hidden');
-    //console.log(this);
-});
 
 //$('#arc').arctext({radius: 120});
 
