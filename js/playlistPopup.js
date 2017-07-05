@@ -31,7 +31,7 @@ class PlaylistPopup {
 
     remove(e) {
         if (e.target.id === "popup_background") {
-            $(e.currentTarget).remove();
+            e.currentTarget.remove();
         }
     }
 }

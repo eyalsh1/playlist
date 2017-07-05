@@ -10,12 +10,11 @@ $.get("api/playlist.php?type=playlist", function(response) {
 });
 
 function addAlbom(albom) {
-    console.log(albom.id);
-    console.log(albom.name);
-    console.log(albom.image);
+    //console.log("id=" + albom.id + ", name=" + albom.name + ", image=" + albom.image);
 
     var albomName = $('<div>', {
         class: "albom-name",
+        id: albom.id
     }).appendTo("body");
 
     $('<strong>', {
@@ -24,7 +23,7 @@ function addAlbom(albom) {
 
     var outerCircle = $('<div>', {
         class: "outer-circle",
-        'album-id': albom.id
+        //'album-id': albom.id
     });
     outerCircle.css('background-image', 'url(' + albom.image + ')');
     outerCircle.appendTo(albomName);
@@ -32,6 +31,10 @@ function addAlbom(albom) {
     $('<button>', {
         type: "button",
         class: "btn btn-warning btn-circle glyphicon glyphicon-remove",
+        click : function(){
+            var deleteAlbomPopup = new DeleteAlbomPopup();
+            deleteAlbomPopup.build(albom.id);
+        }
     }).appendTo(outerCircle);
 
     $('<button>', {

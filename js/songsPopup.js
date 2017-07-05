@@ -25,8 +25,17 @@ class SongsPopup {
                     song.name = $(el).find('input[name=name]').val();
                     newPlaylistObject.songs.push(song);
                 });
-                //console.log(newPlaylistObject);
+
+                addAlbomToDB(newPlaylistObject);
                 $("#popup_background").remove();
+                addAlbom(newPlaylistObject);
+                /*if (addAlbomToDB() === 200) {
+                    alert("New Albom was adfded to server...");
+                    $("#popup_background").remove();
+                }newPlaylistObject
+                else {
+                    alert("Faild to add albom to server, please try again...");
+                }*/
             });
         });
     }
@@ -70,4 +79,16 @@ function addSong() {
     }).appendTo(colDiv2);
 
     return fieldset;
+}
+
+function addAlbomToDB(newPlaylistObject) {
+    //console.log(newPlaylistObject);
+    $.post("api/playlist.php?type=playlist", {
+        name: newPlaylistObject.name,
+        image: newPlaylistObject.photo,
+        songs: newPlaylistObject.songs,
+    }, function (data, textStatus, xhr) {
+        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        return (xhr.status);
+    });
 }
