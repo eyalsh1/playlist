@@ -3,6 +3,9 @@ $('#add-new-playlist-button').on('click',function() {
     playlistPopup.build();
 });
 
+/*var musicPlayer = new MusicPlayer();
+musicPlayer.loadPreviousPage();*/
+
 $.get("api/playlist.php?type=playlist", function(response) {
     for (i=0; i < response.data.length; i++) {
         addAlbom(response.data[i]);
@@ -45,6 +48,11 @@ function addAlbom(albom) {
     $('<button>', {
         type: "button",
         class: "btn btn-success btn-circle-xl glyphicon glyphicon-play",
+        click : function(){
+            //alert(albom.id);
+            var musicPlayer = new MusicPlayer();
+            musicPlayer.build(albom.id);
+        }
     }).appendTo(outerCircle);
 }
 

@@ -12,8 +12,14 @@ class SongsPopup {
         $.get('html/addPlayListSongs.html', function(data) {
             content.html(data);
 
-            content.find('#add-another-song-button').click(function(event) {
+            $('#add-another-song-button').click(function(event) {
                 addSong().insertAfter(content.find('fieldset:last-of-type'));
+            });
+
+            // Eyal - doesn't get event of second song and up
+            content.find('#remove_icon').click(function(event) {
+                console.log(this);
+                $(event.target).closest("fieldset").remove();
             });
 
             content.find('form').submit(function(event) {
@@ -64,7 +70,7 @@ function addSong() {
     }).appendTo(colDiv1);
 
     $('<label>', {
-        class: "col-sm-2 control-label",
+        class: "col-sm-1 control-label",
         text: "Name",
     }).appendTo(formGroupDiv);
 
@@ -77,6 +83,20 @@ function addSong() {
         class: "form-control",
         name: "name",
     }).appendTo(colDiv2);
+
+    var colDiv3 = $('<div>', {
+        class: "col-sm-1",
+    }).appendTo(formGroupDiv);
+
+    var btn = $('<button>', {
+        type: "button",
+        id: "remove_icon",
+        class: "btn btn-danger"
+    }).appendTo(colDiv3);
+
+    var btn = $('<span>', {
+        class: "glyphicon glyphicon-remove"
+    }).appendTo(btn);
 
     return fieldset;
 }

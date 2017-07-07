@@ -19,6 +19,17 @@
     right: 10px;
 }
 
+#remove_icon {
+    height: 45px;
+}
+
+/*.icon-button {
+    appearance: none;
+    outline: none;
+    border: 0;
+    background: transparent;
+}*/
+
 /*#are-you-sure-popup{
     text-align: center;
     width: 30%;

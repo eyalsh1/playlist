@@ -1,0 +1,55 @@
+.player-song-button {
+    background-color: #dddddd;
+    border: none;
+}
+
+.player-cover {
+    border: 2px solid #a1a1a1;
+    margin: auto;
+    /*margin-top: 50px;*/
+    padding: 10px 40px;
+    background: #dddddd;
+    width: 80%;
+    border-radius: 300px;
+    position: relative;
+}
+
+.player-audio-container {
+    position: absolute;
+    top: 10%;
+    left: 45%;
+}
+
+ol {
+    position: absolute;
+    left: -8%;
+}
+
+.player-outer-circle {
+    width: 260px;
+    height: 260px;
+    margin: 20px;
+    border-radius: 50%;
+    position: relative;
+    background: red;
+}
+
+.player-btn-circle-xl {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    border-radius: 35px;
+    left: 35%;
+    top: 35%;
+}
+
+.rotate {
+    animation: rotation 10s linear infinite;
+}
+
+@keyframes rotation {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}

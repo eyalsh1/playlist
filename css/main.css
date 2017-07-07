@@ -57,13 +57,6 @@ body {
     display: block;
 }
 
-.triangle-right {
-    border-left: 30px solid red;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    margin: 35px 0 0 40px;
-}
-
 .btn-circle {
     position: absolute;
     width: 30px;
