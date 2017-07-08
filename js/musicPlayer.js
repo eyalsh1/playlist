@@ -75,12 +75,12 @@ function buildPlayer(albom_id) {
         click: function() {
             if ($(".player-outer-circle").hasClass("rotate")) {
                 $(".player-outer-circle").removeClass("rotate");
-                $("button[type=button]").removeClass("glyphicon-pause");
-                $("button[type=button]").addClass("glyphicon-play");
+                $(".player-outer-circle button[type=button]").removeClass("glyphicon-pause");
+                $(".player-outer-circle button[type=button]").addClass("glyphicon-play");
             } else {
                 $(".player-outer-circle").addClass("rotate");
-                $("button[type=button]").removeClass("glyphicon-play");
-                $("button[type=button]").addClass("glyphicon-pause");
+                $(".player-outer-circle button[type=button]").removeClass("glyphicon-play");
+                $(".player-outer-circle button[type=button]").addClass("glyphicon-pause");
 
                 //var audio = $('audio');
                 //console.log(audio);
@@ -158,7 +158,6 @@ function playSong(e) {
         .attr({src: pressedBtn.dataset.src})
     audio[0].play();
     audio.on('ended', function(e) {
-        //console.log(e);
         $(pressedBtn).parent('li').next().find('button').trigger('click');
     });
     $('.player-cover').find(".player-outer-circle").addClass("rotate");
@@ -168,46 +167,8 @@ function playSong(e) {
 
 function loadPreviousPage()
 {
-    $('body').empty();
-
-    var navbar = $('<nav>', {
-        class: "navbar navbar-default navbar-fixed-top",
-    }).appendTo('body');
-
-    var container = $('<div>', {
-        class: "container",
-    }).appendTo(navbar);
-
-    var p = $('<p>').appendTo(container);
-
-    var button_new = $('<button>', {
-        type: "button",
-        id: "add-new-playlist-button",
-        class: "btn btn-info btn-lg",
-        click: function () {
-            var playlistPopup = new PlaylistPopup();
-            playlistPopup.build();
-        }
-    }).appendTo(p);
-
-    $('<span>', {
-        class: "glyphicon glyphicon-plus-sign",
-    }).appendTo(button_new);
-
-    $('<span>', {
-        text: "  Add new playlist",
-    }).appendTo(button_new);
-
-    var span = $('<span>', {
-        class: "pull-right",
-    }).appendTo(p);
-
-    $('<input>', {
-        type: "text",
-        class: "form-control",
-        placeholder: "Search playlists",
-        name: "q",
-    }).appendTo(span);
+    buildHader();
+    addAlboms();
 }
 
 /*class MusicPlayer {

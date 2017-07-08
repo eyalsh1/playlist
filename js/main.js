@@ -1,13 +1,56 @@
-$('#add-new-playlist-button').on('click',function() {
-    var playlistPopup = new PlaylistPopup();
-    playlistPopup.build();
-});
+buildHader();
+addAlboms();
 
-$.get("api/playlist.php?type=playlist", function(response) {
-    for (i=0; i < response.data.length; i++) {
-        addAlbom(response.data[i]);
-    }
-});
+function buildHader() {
+    $('body').empty();
+
+    var navbar = $('<nav>', {
+        class: "navbar navbar-default navbar-fixed-top",
+    }).appendTo('body');
+
+    var container = $('<div>', {
+        class: "container",
+    }).appendTo(navbar);
+
+    var p = $('<p>').appendTo(container);
+
+    var button_new = $('<button>', {
+        type: "button",
+        id: "add-new-playlist-button",
+        class: "btn btn-info btn-lg",
+        click: function () {
+            var playlistPopup = new PlaylistPopup();
+            playlistPopup.build();
+        }
+    }).appendTo(p);
+
+    $('<span>', {
+        class: "glyphicon glyphicon-plus-sign",
+    }).appendTo(button_new);
+
+    $('<span>', {
+        text: "  Add new playlist",
+    }).appendTo(button_new);
+
+    var span = $('<span>', {
+        class: "pull-right",
+    }).appendTo(p);
+
+    $('<input>', {
+        type: "text",
+        class: "form-control",
+        placeholder: "Search playlists",
+        name: "q",
+    }).appendTo(span);
+}
+
+function addAlboms() {
+    $.get("api/playlist.php?type=playlist", function (response) {
+        for (i = 0; i < response.data.length; i++) {
+            addAlbom(response.data[i]);
+        }
+    });
+}
 
 function addAlbom(albom) {
     //console.log("id=" + albom.id + ", name=" + albom.name + ", image=" + albom.image);

@@ -18,7 +18,7 @@ class SongsPopup {
 
             // Eyal - doesn't get event of second song and up
             content.find('#remove_icon').click(function(event) {
-                console.log(this);
+                //console.log(this);
                 $(event.target).closest("fieldset").remove();
             });
 
@@ -91,7 +91,10 @@ function addSong() {
     var btn = $('<button>', {
         type: "button",
         id: "remove_icon",
-        class: "btn btn-danger"
+        class: "btn btn-default",
+        click: function (event) {
+            $(event.target).closest("fieldset").remove();
+        }
     }).appendTo(colDiv3);
 
     var btn = $('<span>', {

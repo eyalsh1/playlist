@@ -21,6 +21,7 @@
 
 #remove_icon {
     height: 45px;
+    border: none;
 }
 
 /*.icon-button {
