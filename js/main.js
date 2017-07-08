@@ -3,9 +3,6 @@ $('#add-new-playlist-button').on('click',function() {
     playlistPopup.build();
 });
 
-/*var musicPlayer = new MusicPlayer();
-musicPlayer.loadPreviousPage();*/
-
 $.get("api/playlist.php?type=playlist", function(response) {
     for (i=0; i < response.data.length; i++) {
         addAlbom(response.data[i]);
@@ -33,7 +30,7 @@ function addAlbom(albom) {
 
     $('<button>', {
         type: "button",
-        class: "btn btn-warning btn-circle glyphicon glyphicon-remove",
+        class: "btn btn-warning btn-circle glyphicon glyphicon-remove main-remove",
         click : function(){
             var deleteAlbomPopup = new DeleteAlbomPopup();
             deleteAlbomPopup.build(albom.id);
@@ -42,16 +39,21 @@ function addAlbom(albom) {
 
     $('<button>', {
         type: "button",
-        class: "btn btn-info btn-circle glyphicon glyphicon-pencil",
+        class: "btn btn-info btn-circle glyphicon glyphicon-pencil main-pencil",
+        click : function(){
+            var playlistPopup = new PlaylistPopup();
+            playlistPopup.build();
+        }
     }).appendTo(outerCircle);
 
     $('<button>', {
         type: "button",
-        class: "btn btn-success btn-circle-xl glyphicon glyphicon-play",
+        class: "btn btn-success btn-circle-xl glyphicon glyphicon-play main-play",
         click : function(){
             //alert(albom.id);
-            var musicPlayer = new MusicPlayer();
-            musicPlayer.build(albom.id);
+            buildMusicPlayer(albom.id);
+            //var musicPlayer = new MusicPlayer();
+            //musicPlayer.build(albom.id);
         }
     }).appendTo(outerCircle);
 }
