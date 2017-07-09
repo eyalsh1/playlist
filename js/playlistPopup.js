@@ -29,9 +29,9 @@ class PlaylistPopup {
         });
     }
 
-    remove(e) {
-        if (e.target.id === "popup_background") {
-            e.currentTarget.remove();
+    remove(event) {
+        if (event.target.id === "popup_background") {
+            event.currentTarget.remove();
         }
     }
 }

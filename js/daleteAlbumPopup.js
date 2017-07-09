@@ -26,15 +26,15 @@ class DeleteAlbomPopup {
                 //$("#popup_background").remove();
             });
 
-            $('.btn-success').click(function(e) {
+            $('.btn-success').click(function(event) {
                 $("#popup_background").remove();
             });
         });
     }
 
-    remove(e) {
-        if (e.target.id === "popup_background") {
-            e.currentTarget.remove();
+    remove(event) {
+        if (event.target.id === "popup_background") {
+            event.currentTarget.remove();
         }
     }
 }
