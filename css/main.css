@@ -71,6 +71,10 @@ body {
     top: 35%;
 }
 
+.albom-title {
+    color: red;
+}
+
 /*.img-circle{
     animation: rotation 2s linear infinite;
 }
@@ -80,7 +84,7 @@ body {
     100% {transform: rotate(360deg); }
 }*/
 
-/*#arc {
+#arc {
     width: 300px;
     height: 300px;
-}*/
+}

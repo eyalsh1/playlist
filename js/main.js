@@ -40,14 +40,19 @@ function buildHader() {
         type: "text",
         class: "form-control",
         placeholder: "Search playlists",
+        keyup: function () {
+            addAlboms($(this).val());
+        },
         name: "q",
     }).appendTo(span);
 }
 
-function addAlboms() {
+function addAlboms(name="") {
+    $(".albom-name").remove();
     $.get("api/playlist.php?type=playlist", function (response) {
         for (i = 0; i < response.data.length; i++) {
-            addAlbom(response.data[i]);
+            if (name === "" || response.data[i].name.toUpperCase().startsWith(name.toUpperCase()))
+                addAlbom(response.data[i]);
         }
     });
 }
@@ -60,7 +65,8 @@ function addAlbom(albom) {
         id: albom.id
     }).appendTo("body");
 
-    $('<strong>', {
+    $('<h3>', {
+        class: "albom-title",
         text: albom.name,
     }).appendTo(albomName);
 
@@ -99,15 +105,19 @@ function addAlbom(albom) {
             //musicPlayer.build(albom.id);
         }
     }).appendTo(outerCircle);
+
+    //$('albom-title').circleType({radius: 200});
 }
+
+$(document).ready(function() {
+    $('albom-name.albom-title').circleType({radius: 200}); // Eyal - fix
+});
 
 /*$( ".outer-circle" ).hover(function() {
     //console.log('hover');
     $( this ).fadeOut( 100 );
     $( this ).fadeIn( 100 );
 });*/
-
-//$('#arc').arctext({radius: 120});
 
 // $.ajax({
 //     url: "api/playlist.php?type=playlist&id=1",
