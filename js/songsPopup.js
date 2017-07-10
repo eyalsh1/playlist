@@ -7,16 +7,25 @@ class SongsPopup {
     build() {
         var content = this.form.parent();
         this.form.remove();
-        $(".panel-heading").text("Add Playlist Songs");
+
+        //console.log(newPlaylistObject);
+
+        if (newPlaylistObject.id > 0)  // Edit
+            $("strong").text("Edit Playlist Songs");
+        else  // Add
+            $("strong").text("Add Playlist Songs");
 
         $.get('html/addPlayListSongs.html', function(data) {
             content.html(data);
 
             $('#add-another-song-button').click(function(event) {
-                addSong().insertAfter(content.find('fieldset:last-of-type'));
+
+                if (content.find('fieldset').length > 0)
+                    addSong().insertAfter(content.find('fieldset:last-of-type'));
+                else
+                    alert("eyal");
             });
 
-            // Eyal - doesn't get event of second song and up
             content.find('#remove_icon').click(function(event) {
                 //console.log(this);
                 $(event.target).closest("fieldset").remove();
@@ -34,7 +43,7 @@ class SongsPopup {
 
                 addAlbomToDB(newPlaylistObject);
                 $("#popup_background").remove();
-                addAlbom(newPlaylistObject);
+                addAlbom(newPlaylistObject); // to html
                 /*if (addAlbomToDB() === 200) {
                     alert("New Albom was adfded to server...");
                     $("#popup_background").remove();

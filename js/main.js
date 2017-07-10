@@ -80,7 +80,7 @@ function addAlbom(albom) {
     $('<button>', {
         type: "button",
         class: "btn btn-warning btn-circle glyphicon glyphicon-remove main-remove",
-        click : function(){
+        click: function(){
             var deleteAlbomPopup = new DeleteAlbomPopup();
             deleteAlbomPopup.build(albom.id);
         }
@@ -89,16 +89,16 @@ function addAlbom(albom) {
     $('<button>', {
         type: "button",
         class: "btn btn-info btn-circle glyphicon glyphicon-pencil main-pencil",
-        click : function(){
+        click: function(){
             var playlistPopup = new PlaylistPopup();
-            playlistPopup.build();
+            playlistPopup.build(albom.id);
         }
     }).appendTo(outerCircle);
 
     $('<button>', {
         type: "button",
         class: "btn btn-success btn-circle-xl glyphicon glyphicon-play main-play",
-        click : function(){
+        click: function(){
             //alert(albom.id);
             buildMusicPlayer(albom.id);
             //var musicPlayer = new MusicPlayer();

@@ -1,7 +1,7 @@
 var newPlaylistObject = {};
 
 class PlaylistPopup {
-    build() {
+    build(albom_id=0) {
         var popup = $('<div>', {
             id: "popup_background",
             click: this.remove.bind(this),
@@ -11,6 +11,18 @@ class PlaylistPopup {
             var content = $('<div>', {
                 html: data,
             }).appendTo(popup);
+
+            if (albom_id > 0) { // edit playlist
+                $("strong").text("Edit Playlist");
+                newPlaylistObject.id = albom_id;
+                $.get("api/playlist.php?type=playlist&id=" + albom_id, function(response) {
+                    $("input[type=text]").val(response.data.name);
+                    $("input[type=url]").val(response.data.image);
+                });
+            }
+            else { // new playlist
+                $("strong").text("Add New Playlist");
+            }
 
             content.find('form').submit(function(event) {
                 event.preventDefault();
