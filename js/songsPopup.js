@@ -8,22 +8,33 @@ class SongsPopup {
         var content = this.form.parent();
         this.form.remove();
 
-        //console.log(newPlaylistObject);
-
-        if (newPlaylistObject.id > 0)  // Edit
-            $("strong").text("Edit Playlist Songs");
-        else  // Add
-            $("strong").text("Add Playlist Songs");
-
         $.get('html/addPlayListSongs.html', function(data) {
             content.html(data);
 
-            $('#add-another-song-button').click(function(event) {
+            if (newPlaylistObject.id > 0) { // Edit
+                $("strong").text("Edit Playlist Songs");
 
-                if (content.find('fieldset').length > 0)
+                $.ajax({
+                    url : "api/playlist.php?&type=songs&id=" + newPlaylistObject.id ,
+                    method:'GET',
+                    success: function(response){
+                        var object = response.data.songs;
+                        $.each(object, function(index, val) {
+                            addSong(val.name, val.url).insertBefore(content.find('.form-buttons'));
+                        });
+                    }
+                });
+            }
+            else { // Add
+                $("strong").text("Add Playlist Songs");
+                addSong().insertBefore(content.find('.form-buttons'));
+            }
+
+            $('#add-another-song-button').click(function(event) {
+                /*if (content.find('fieldset').length > 0)
                     addSong().insertAfter(content.find('fieldset:last-of-type'));
-                else
-                    alert("eyal");
+                else*/
+                    addSong().insertBefore(content.find('.form-buttons'));
             });
 
             content.find('#remove_icon').click(function(event) {
@@ -41,9 +52,17 @@ class SongsPopup {
                     newPlaylistObject.songs.push(song);
                 });
 
-                addAlbomToDB(newPlaylistObject);
+                if (newPlaylistObject.id > 0) { // Edit
+                    editAlbomInDB(newPlaylistObject); // need to make sure it finished updating DB - Eyal
+                    addAlboms();
+                }
+                else { // Add
+                    addAlbomToDB(newPlaylistObject);
+                    addAlbom(newPlaylistObject); // to html
+                }
+
                 $("#popup_background").remove();
-                addAlbom(newPlaylistObject); // to html
+                //addAlbom(newPlaylistObject); // to html
                 /*if (addAlbomToDB() === 200) {
                     alert("New Albom was adfded to server...");
                     $("#popup_background").remove();
@@ -56,7 +75,7 @@ class SongsPopup {
     }
 }
 
-function addSong() {
+function addSong(name="", url="") {
     var fieldset = $('<fieldset>');
 
     var formGroupDiv = $('<div>', {
@@ -73,9 +92,10 @@ function addSong() {
     }).appendTo(formGroupDiv);
 
     $('<input>', {
-        type: "url",
+        type: "text", //type: "url",
         class: "form-control",
         name: "url",
+        val: url,
     }).appendTo(colDiv1);
 
     $('<label>', {
@@ -91,6 +111,7 @@ function addSong() {
         type: "text",
         class: "form-control",
         name: "name",
+        val: name,
     }).appendTo(colDiv2);
 
     var colDiv3 = $('<div>', {
@@ -118,6 +139,24 @@ function addAlbomToDB(newPlaylistObject) {
     $.post("api/playlist.php?type=playlist", {
         name: newPlaylistObject.name,
         image: newPlaylistObject.photo,
+        songs: newPlaylistObject.songs,
+    }, function (data, textStatus, xhr) {
+        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        return (xhr.status);
+    });
+}
+
+function editAlbomInDB(newPlaylistObject) {
+    //console.log(newPlaylistObject);
+    $.post("api/playlist.php?type=playlist&id=" + newPlaylistObject.id, {
+        name: newPlaylistObject.name,
+        image: newPlaylistObject.photo,
+    }, function (data, textStatus, xhr) {
+        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        return (xhr.status);
+    });
+
+    $.post("api/playlist.php?type=songs&id=" + newPlaylistObject.id, {
         songs: newPlaylistObject.songs,
     }, function (data, textStatus, xhr) {
         console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);

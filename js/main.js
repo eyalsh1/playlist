@@ -109,9 +109,9 @@ function addAlbom(albom) {
     //$('albom-title').circleType({radius: 200});
 }
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('albom-name.albom-title').circleType({radius: 200}); // Eyal - fix
-});
+});*/
 
 /*$( ".outer-circle" ).hover(function() {
     //console.log('hover');
