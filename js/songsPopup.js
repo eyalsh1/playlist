@@ -148,14 +148,6 @@ function addAlbomToDB(newPlaylistObject) {
 
 function editAlbomInDB(newPlaylistObject) {
     //console.log(newPlaylistObject);
-    $.post("api/playlist.php?type=playlist&id=" + newPlaylistObject.id, {
-        name: newPlaylistObject.name,
-        image: newPlaylistObject.photo,
-    }, function (data, textStatus, xhr) {
-        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
-        return (xhr.status);
-    });
-
     $.post("api/playlist.php?type=songs&id=" + newPlaylistObject.id, {
         songs: newPlaylistObject.songs,
     }, function (data, textStatus, xhr) {

@@ -28,6 +28,15 @@ class PlaylistPopup {
                 event.preventDefault();
                 newPlaylistObject.name = $(event.target).find('input[name=name]').val();
                 newPlaylistObject.photo = $(event.target).find('input[name=url]').val();
+
+                $.post("api/playlist.php?type=playlist&id=" + newPlaylistObject.id, {
+                    name: newPlaylistObject.name,
+                    image: newPlaylistObject.photo,
+                }, function (data, textStatus, xhr) {
+                    console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+                    return (xhr.status);
+                });
+
                 //console.log(newPlaylistObject);
                 //addSongs($(event.target));
                 var songsPopup = new SongsPopup($(event.target), newPlaylistObject);
