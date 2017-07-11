@@ -82,26 +82,18 @@ function buildPlayer(albom_id) {
                 $(".player-outer-circle button[type=button]").removeClass("glyphicon-play");
                 $(".player-outer-circle button[type=button]").addClass("glyphicon-pause");
 
-                var pressedBtn = cover.find("li:first-of-type").html();
-
-                //console.log(pressedBtn.attr("data-src"));
-                //console.log(pressedBtn);
+                var pressedBtn = cover.find("li:first-of-type button");
+                var albom = pressedBtn.attr("data-src"); // Get first albom src
+                //console.log(albom);
 
                 var audioContainer = $('.player-audio-container');
                 audioContainer.find('strong').text('NOW PLAYING: ' + $(pressedBtn).text());
                 var audio = $('audio');
-                audio.attr({src: "music/Hayehudim/Ezlech Baolam.mp3"}) // Eyal - fix...
+                audio.attr({src: albom})
                 audio[0].play();
                 audio.on('ended', function(event) {
                     $(pressedBtn).parent('li').next().find('button').trigger('click');
                 });
-
-
-                //var audio = $('audio');
-                //console.log(audio);
-                //audio[0].play();
-
-                //var s = $("li:first-of-type").trigger('click');
             }
         }
     }).appendTo(outerCircle);
@@ -147,7 +139,6 @@ function buildSongs(albom_id)
         method:'GET',
         success: function(response){
             var object = response.data.songs;
-
             var audioContainer = $(".player-audio-container");
             var filesListContainer = $('<ol>').appendTo(audioContainer);
             $.each(object, function(index, val) {
