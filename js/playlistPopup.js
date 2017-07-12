@@ -17,7 +17,7 @@ class PlaylistPopup {
                 newPlaylistObject.id = albom_id;
                 $.get("api/playlist.php?type=playlist&id=" + albom_id, function(response) {
                     if (response.success) {
-                        $("input[type=text]").val(response.data.name);
+                        $(".col-sm-9 input[type=text]").val(response.data.name);
                         $("input[type=url]").val(response.data.image);
                         $("img").attr('src', response.data.image);
                     }

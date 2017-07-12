@@ -164,8 +164,7 @@ function playSong(event) {
     var audioContainer = $('.player-audio-container');
     audioContainer.find('strong').text('NOW PLAYING: ' + $(pressedBtn).text());
     var audio = $('audio');
-    audio
-        .attr({src: pressedBtn.dataset.src})
+    audio.attr({src: pressedBtn.dataset.src})
     audio[0].play();
     audio.on('ended', function(event) {
         $(pressedBtn).parent('li').next().find('button').trigger('click');
