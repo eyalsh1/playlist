@@ -65,8 +65,10 @@ function buildPlayer(albom_id) {
     });
 
     $.get("api/playlist.php?type=playlist&id=" + albom_id, function(response) {
-        outerCircle.css("background-image", 'url(' + response.data.image + ')');
-        outerCircle.appendTo(cover);
+        if (response.success) {
+            outerCircle.css("background-image", 'url(' + response.data.image + ')');
+            outerCircle.appendTo(cover);
+        }
     });
 
     $('<button>', {
@@ -138,19 +140,21 @@ function buildSongs(albom_id)
         url : "api/playlist.php?&type=songs&id=" + albom_id ,
         method:'GET',
         success: function(response){
-            var object = response.data.songs;
-            var audioContainer = $(".player-audio-container");
-            var filesListContainer = $('<ol>').appendTo(audioContainer);
-            $.each(object, function(index, val) {
-                var li = $('<li>', {
-                    html: $('<button>', {
-                        text: val.name,
-                        click: playSong,
-                        class: "player-song-button",
-                    }).attr('data-src', val.url),
-                }).appendTo(filesListContainer);
-            });
-            filesListContainer.appendTo(audioContainer);
+            if (response.success) {
+                var object = response.data.songs;
+                var audioContainer = $(".player-audio-container");
+                var filesListContainer = $('<ol>').appendTo(audioContainer);
+                $.each(object, function (index, val) {
+                    var li = $('<li>', {
+                        html: $('<button>', {
+                            text: val.name,
+                            click: playSong,
+                            class: "player-song-button",
+                        }).attr('data-src', val.url),
+                    }).appendTo(filesListContainer);
+                });
+                filesListContainer.appendTo(audioContainer);
+            }
         }
     });
 }

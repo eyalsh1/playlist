@@ -15,7 +15,7 @@ class DeleteAlbomPopup {
                     url: 'api/playlist.php?type=playlist&id=' + albom_id,
                     type: 'DELETE',
                     success: function (data) {
-                        console.log(data.success);
+                        //console.log(data.success);
                         if (data.success === true) {
                             $('body').find("#"+albom_id).remove();
                             $("#popup_background").remove();

@@ -16,13 +16,23 @@ class PlaylistPopup {
                 $("strong").text("Edit Playlist");
                 newPlaylistObject.id = albom_id;
                 $.get("api/playlist.php?type=playlist&id=" + albom_id, function(response) {
-                    $("input[type=text]").val(response.data.name);
-                    $("input[type=url]").val(response.data.image);
+                    if (response.success) {
+                        $("input[type=text]").val(response.data.name);
+                        $("input[type=url]").val(response.data.image);
+                        $("img").attr('src', response.data.image);
+                    }
                 });
             }
             else { // new playlist
                 $("strong").text("Add New Playlist");
             }
+
+            content.find("input[type=url]").on('paste', function(event) {
+                var element = this;
+                setTimeout(function () {
+                    $("img").attr('src', $(element).val());
+                }, 100);
+            });
 
             content.find('form').submit(function(event) {
                 event.preventDefault();
@@ -33,8 +43,8 @@ class PlaylistPopup {
                     name: newPlaylistObject.name,
                     image: newPlaylistObject.photo,
                 }, function (data, textStatus, xhr) {
-                    console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
-                    return (xhr.status);
+                    //console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+                    return (data.success);
                 });
 
                 //console.log(newPlaylistObject);
@@ -46,6 +56,7 @@ class PlaylistPopup {
             content.find('button[type=reset]').click(function() {
                 //alert("click");
                 $('.form-horizontal')[0].reset();
+                $("img").attr('src', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy12dSWsrdbj7FSjIlRrKHEDiU0-iNfMQ_9hHmvuPJUH__6YHy');
             });
         });
     }

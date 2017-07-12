@@ -18,10 +18,12 @@ class SongsPopup {
                     url : "api/playlist.php?&type=songs&id=" + newPlaylistObject.id ,
                     method:'GET',
                     success: function(response){
-                        var object = response.data.songs;
-                        $.each(object, function(index, val) {
-                            addSong(val.name, val.url).insertBefore(content.find('.form-buttons'));
-                        });
+                        if (response.success) {
+                            var object = response.data.songs;
+                            $.each(object, function (index, val) {
+                                addSong(val.name, val.url).insertBefore(content.find('.form-buttons'));
+                            });
+                        }
                     }
                 });
             }
@@ -53,30 +55,29 @@ class SongsPopup {
                 });
 
                 if (newPlaylistObject.id > 0) { // Edit
-                    var response = editAlbomInDB(newPlaylistObject);
-                    console.log("response=", response);
-                    if (response != 200) {
+                    //var response = editAlbomInDB(newPlaylistObject);
+                    //console.log("response=", response);
+                    editAlbomInDB(newPlaylistObject);
+                    addAlboms();
+                    /*if (!editAlbomInDB(newPlaylistObject)) {
                         var responsePopup = new ResponsePopup();
                         responsePopup.build("Failed updating DB!");
-                        //alert("Failed updating DB!");
                     }
                     else
-                        addAlboms();
+                        addAlboms();*/
                 }
                 else { // Add
                     addAlbomToDB(newPlaylistObject);
                     addAlbom(newPlaylistObject); // to html
+                    /*if (!addAlbomToDB(newPlaylistObject)) {
+                        var responsePopup = new ResponsePopup();
+                        responsePopup.build("Failed updating DB!");
+                    }
+                    else
+                        addAlbom(newPlaylistObject); // to html*/
                 }
 
                 $("#popup_background").remove();
-                //addAlbom(newPlaylistObject); // to html
-                /*if (addAlbomToDB() === 200) {
-                    alert("New Albom was adfded to server...");
-                    $("#popup_background").remove();
-                }newPlaylistObject
-                else {
-                    alert("Faild to add albom to server, please try again...");
-                }*/
             });
         });
     }
@@ -148,8 +149,8 @@ function addAlbomToDB(newPlaylistObject) {
         image: newPlaylistObject.photo,
         songs: newPlaylistObject.songs,
     }, function (data, textStatus, xhr) {
-        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
-        return (xhr.status);
+        //console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        return (data.success);
     });
 }
 
@@ -158,7 +159,7 @@ function editAlbomInDB(newPlaylistObject) {
     $.post("api/playlist.php?type=songs&id=" + newPlaylistObject.id, {
         songs: newPlaylistObject.songs,
     }, function (data, textStatus, xhr) {
-        console.log("id=" + newPlaylistObject.id + ", status=" + textStatus + ", statusId=" + xhr.status);
-        return (xhr.status);
+        //console.log("id=" + newPlaylistObject.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        return (data.success);
     });
 }

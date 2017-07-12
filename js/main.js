@@ -50,9 +50,11 @@ function buildHader() {
 function addAlboms(name="") {
     $(".albom-name").remove();
     $.get("api/playlist.php?type=playlist", function (response) {
-        for (i = 0; i < response.data.length; i++) {
-            if (name === "" || response.data[i].name.toUpperCase().startsWith(name.toUpperCase()))
-                addAlbom(response.data[i]);
+        if (response.success) {
+            for (i = 0; i < response.data.length; i++) {
+                if (name === "" || response.data[i].name.toUpperCase().startsWith(name.toUpperCase()))
+                    addAlbom(response.data[i]);
+            }
         }
     });
 }
