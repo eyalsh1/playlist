@@ -53,8 +53,15 @@ class SongsPopup {
                 });
 
                 if (newPlaylistObject.id > 0) { // Edit
-                    editAlbomInDB(newPlaylistObject); // need to make sure it finished updating DB - Eyal
-                    addAlboms();
+                    var response = editAlbomInDB(newPlaylistObject);
+                    console.log("response=", response);
+                    if (response != 200) {
+                        var responsePopup = new ResponsePopup();
+                        responsePopup.build("Failed updating DB!");
+                        //alert("Failed updating DB!");
+                    }
+                    else
+                        addAlboms();
                 }
                 else { // Add
                     addAlbomToDB(newPlaylistObject);
@@ -151,7 +158,7 @@ function editAlbomInDB(newPlaylistObject) {
     $.post("api/playlist.php?type=songs&id=" + newPlaylistObject.id, {
         songs: newPlaylistObject.songs,
     }, function (data, textStatus, xhr) {
-        console.log("id=" + data.id + ", status=" + textStatus + ", statusId=" + xhr.status);
+        console.log("id=" + newPlaylistObject.id + ", status=" + textStatus + ", statusId=" + xhr.status);
         return (xhr.status);
     });
 }
